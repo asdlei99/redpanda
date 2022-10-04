@@ -1,0 +1,24 @@
+on:
+  push:
+    branches:
+      - '**'
+    tags-ignore:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  kics:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: run kics Scan
+      uses: checkmarx/kics-github-action@v1.5
+      with:
+        path: '.'
+        output_path: res/
+    - name: display kics results
+      run: |
+        cat res/results.json
